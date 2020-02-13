@@ -1,0 +1,13 @@
+[package]
+name = "dino_park_trust"
+version = "0.0.1"
+authors = ["Florian Merz <flomerz@gmail.com>"]
+edition = "2018"
+license = "MIT"
+repository = "https://github.com/mozilla-iam/dino-park-trust"
+readme = "README.md"
+
+[dependencies]
+serde = "1.0"
+serde_derive = "1.0"
+failure = "0.1"
