@@ -23,6 +23,14 @@ pub enum TrustError {
     TrustLevelToLow,
 }
 
+#[derive(Fail, Debug)]
+pub enum GroupsTrustError {
+    #[fail(display = "Invalid groups trust level")]
+    InvalidGroupsTrustLevel,
+    #[fail(display = "More groups trust required")]
+    GroupsTrustLevelToLow,
+}
+
 impl TryFrom<&str> for Trust {
     type Error = TrustError;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
@@ -36,10 +44,38 @@ impl TryFrom<&str> for Trust {
         }
     }
 }
+
 impl TryFrom<String> for Trust {
     type Error = TrustError;
     fn try_from(s: String) -> Result<Self, Self::Error> {
         Trust::try_from(s.as_ref())
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[serde(rename_all = "lowercase")]
+pub enum GroupsTrust {
+    Creator,
+    Admin,
+    None,
+}
+
+impl TryFrom<&str> for GroupsTrust {
+    type Error = GroupsTrustError;
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        match s {
+            "creator" => Ok(GroupsTrust::Creator),
+            "admin" => Ok(GroupsTrust::Admin),
+            "none" | "" => Ok(GroupsTrust::None),
+            _ => Err(GroupsTrustError::InvalidGroupsTrustLevel),
+        }
+    }
+}
+
+impl TryFrom<String> for GroupsTrust {
+    type Error = GroupsTrustError;
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        GroupsTrust::try_from(s.as_ref())
     }
 }
 
@@ -56,8 +92,21 @@ mod tests {
     }
 
     #[test]
-    fn test_ord() {
+    fn trust_test_ord() {
         assert!(Trust::Ndaed >= Trust::Public);
         assert!(Trust::Staff <= Trust::Staff);
+    }
+
+    #[test]
+    fn groups_from_str() -> Result<(), Error> {
+        assert_eq!(GroupsTrust::try_from("")?, GroupsTrust::None);
+        assert_eq!(GroupsTrust::try_from("creator")?, GroupsTrust::Creator);
+        assert_eq!(GroupsTrust::try_from("admin")?, GroupsTrust::Admin);
+        Ok(())
+    }
+
+    #[test]
+    fn groups_test_ord() {
+        assert!(GroupsTrust::Admin >= GroupsTrust::Creator);
     }
 }
