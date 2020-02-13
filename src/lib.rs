@@ -15,7 +15,7 @@ pub enum Trust {
     Staff,
 }
 
-#[derive(Clone, Fail, Debug)]
+#[derive(Clone, Fail, Debug, PartialEq)]
 pub enum TrustError {
     #[fail(display = "Invalid trust level")]
     InvalidTrustLevel,
@@ -23,7 +23,7 @@ pub enum TrustError {
     TrustLevelToLow,
 }
 
-#[derive(Clone, Fail, Debug)]
+#[derive(Clone, Fail, Debug, PartialEq)]
 pub enum GroupsTrustError {
     #[fail(display = "Invalid groups trust level")]
     InvalidGroupsTrustLevel,
@@ -55,9 +55,9 @@ impl TryFrom<String> for Trust {
 #[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum GroupsTrust {
+    None,
     Creator,
     Admin,
-    None,
 }
 
 impl TryFrom<&str> for GroupsTrust {
