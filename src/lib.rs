@@ -5,7 +5,7 @@ extern crate failure;
 
 use std::convert::TryFrom;
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum Trust {
     Public,
@@ -15,7 +15,7 @@ pub enum Trust {
     Staff,
 }
 
-#[derive(Fail, Debug)]
+#[derive(Clone, Fail, Debug)]
 pub enum TrustError {
     #[fail(display = "Invalid trust level")]
     InvalidTrustLevel,
@@ -23,7 +23,7 @@ pub enum TrustError {
     TrustLevelToLow,
 }
 
-#[derive(Fail, Debug)]
+#[derive(Clone, Fail, Debug)]
 pub enum GroupsTrustError {
     #[fail(display = "Invalid groups trust level")]
     InvalidGroupsTrustLevel,
@@ -52,7 +52,7 @@ impl TryFrom<String> for Trust {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum GroupsTrust {
     Creator,
