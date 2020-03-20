@@ -31,6 +31,18 @@ pub enum GroupsTrustError {
     GroupsTrustLevelToLow,
 }
 
+impl Trust {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Staff => "staff",
+            Self::Ndaed => "ndaed",
+            Self::Vouched => "vouched",
+            Self::Authenticated => "authenticated",
+            Self::Public => "public",
+        }
+    }
+}
+
 impl TryFrom<&str> for Trust {
     type Error = TrustError;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
@@ -88,6 +100,12 @@ mod tests {
     fn test_from_str() -> Result<(), Error> {
         assert_eq!(Trust::try_from("staff")?, Trust::Staff);
         assert_eq!(Trust::try_from("ndaed".to_owned())?, Trust::Ndaed);
+        Ok(())
+    }
+
+    #[test]
+    fn test_to_str() -> Result<(), Error> {
+        assert_eq!("staff", Trust::Staff.as_str());
         Ok(())
     }
 
