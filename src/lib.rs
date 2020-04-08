@@ -31,6 +31,12 @@ pub enum GroupsTrustError {
     GroupsTrustLevelToLow,
 }
 
+#[derive(Clone, Fail, Debug, PartialEq)]
+pub enum AALevelError {
+    #[fail(display = "Higher Authenticator Assurance Level (AAL) required")]
+    AALevelToLow,
+}
+
 impl Trust {
     pub fn as_str(&self) -> &str {
         match self {
@@ -91,6 +97,34 @@ impl TryFrom<String> for GroupsTrust {
     }
 }
 
+/// Authenticator Assurance Level
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum AALevel {
+    Unknown,
+    Low,
+    Medium,
+    High,
+    Maximum,
+}
+
+impl From<&str> for AALevel {
+    fn from(s: &str) -> Self {
+        match s {
+            "LOW" => AALevel::Low,
+            "MEDIUM" => AALevel::Medium,
+            "HIGH" => AALevel::High,
+            "MAXIMUM" => AALevel::Maximum,
+            _ => AALevel::Unknown,
+        }
+    }
+}
+
+impl From<String> for AALevel {
+    fn from(s: String) -> Self {
+        AALevel::from(s.as_ref())
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -126,5 +160,17 @@ mod tests {
     #[test]
     fn groups_test_ord() {
         assert!(GroupsTrust::Admin >= GroupsTrust::Creator);
+    }
+
+    #[test]
+    fn aal_from_str() {
+        assert_eq!(AALevel::from(""), AALevel::Unknown);
+        assert_eq!(AALevel::from("MEDIUM"), AALevel::Medium);
+    }
+
+    #[test]
+    fn aal_test_ord() {
+        assert!(AALevel::Unknown < AALevel::Low);
+        assert!(AALevel::High > AALevel::Low);
     }
 }
