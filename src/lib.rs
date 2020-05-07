@@ -17,23 +17,23 @@ pub enum Trust {
 
 #[derive(Clone, Fail, Debug, PartialEq)]
 pub enum TrustError {
-    #[fail(display = "Invalid trust level")]
+    #[fail(display = "invalid_trust_level")]
     InvalidTrustLevel,
-    #[fail(display = "More trust required")]
+    #[fail(display = "more_trust_required")]
     TrustLevelToLow,
 }
 
 #[derive(Clone, Fail, Debug, PartialEq)]
 pub enum GroupsTrustError {
-    #[fail(display = "Invalid groups trust level")]
+    #[fail(display = "invalid_groups_trust_level")]
     InvalidGroupsTrustLevel,
-    #[fail(display = "More groups trust required")]
+    #[fail(display = "more_groups_trust_required")]
     GroupsTrustLevelToLow,
 }
 
 #[derive(Clone, Fail, Debug, PartialEq)]
 pub enum AALevelError {
-    #[fail(display = "Higher Authenticator Assurance Level (AAL) required")]
+    #[fail(display = "higher_aal_required")]
     AALevelToLow,
 }
 

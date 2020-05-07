@@ -1,6 +1,6 @@
 [package]
 name = "dino_park_trust"
-version = "0.0.6"
+version = "0.0.7"
 authors = ["Florian Merz <me@fiji-flo.de>"]
 edition = "2018"
 license = "MIT"
