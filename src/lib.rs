@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate serde_derive;
-#[macro_use]
-extern crate failure;
+use thiserror::Error;
 
 use std::convert::TryFrom;
 
@@ -15,25 +14,25 @@ pub enum Trust {
     Staff,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq)]
 pub enum TrustError {
-    #[fail(display = "invalid_trust_level")]
+    #[error("invalid_trust_level")]
     InvalidTrustLevel,
-    #[fail(display = "more_trust_required")]
+    #[error("more_trust_required")]
     TrustLevelToLow,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq)]
 pub enum GroupsTrustError {
-    #[fail(display = "invalid_groups_trust_level")]
+    #[error("invalid_groups_trust_level")]
     InvalidGroupsTrustLevel,
-    #[fail(display = "more_groups_trust_required")]
+    #[error("more_groups_trust_required")]
     GroupsTrustLevelToLow,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq)]
 pub enum AALevelError {
-    #[fail(display = "higher_aal_required")]
+    #[error("higher_aal_required")]
     AALevelToLow,
 }
 
@@ -128,7 +127,7 @@ impl From<String> for AALevel {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use failure::Error;
+    use anyhow::Error;
 
     #[test]
     fn test_from_str() -> Result<(), Error> {

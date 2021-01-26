@@ -1,6 +1,6 @@
 [package]
 name = "dino_park_trust"
-version = "0.0.7"
+version = "0.1.0"
 authors = ["Florian Merz <me@fiji-flo.de>"]
 edition = "2018"
 license = "MIT"
@@ -8,6 +8,9 @@ repository = "https://github.com/mozilla-iam/dino-park-trust"
 readme = "README.md"
 
 [dependencies]
-serde = "1.0"
-serde_derive = "1.0"
-failure = "0.1"
+serde = "1"
+serde_derive = "1"
+thiserror = "1"
+
+[dev-dependencies]
+anyhow = "1"
