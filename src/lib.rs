@@ -4,7 +4,7 @@ use thiserror::Error;
 
 use std::convert::TryFrom;
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum Trust {
     Public,
@@ -14,7 +14,7 @@ pub enum Trust {
     Staff,
 }
 
-#[derive(Clone, Error, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq, Eq)]
 pub enum TrustError {
     #[error("invalid_trust_level")]
     InvalidTrustLevel,
@@ -22,7 +22,7 @@ pub enum TrustError {
     TrustLevelToLow,
 }
 
-#[derive(Clone, Error, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq, Eq)]
 pub enum GroupsTrustError {
     #[error("invalid_groups_trust_level")]
     InvalidGroupsTrustLevel,
@@ -30,7 +30,7 @@ pub enum GroupsTrustError {
     GroupsTrustLevelToLow,
 }
 
-#[derive(Clone, Error, Debug, PartialEq)]
+#[derive(Clone, Error, Debug, PartialEq, Eq)]
 pub enum AALevelError {
     #[error("higher_aal_required")]
     AALevelToLow,
@@ -69,7 +69,7 @@ impl TryFrom<String> for Trust {
     }
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum GroupsTrust {
     None,
@@ -97,7 +97,7 @@ impl TryFrom<String> for GroupsTrust {
 }
 
 /// Authenticator Assurance Level
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum AALevel {
     Unknown,
