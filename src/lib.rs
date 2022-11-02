@@ -5,7 +5,7 @@ extern crate failure;
 
 use std::convert::TryFrom;
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum Trust {
     Public,
@@ -15,7 +15,7 @@ pub enum Trust {
     Staff,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Fail, Debug, PartialEq, Eq)]
 pub enum TrustError {
     #[fail(display = "invalid_trust_level")]
     InvalidTrustLevel,
@@ -23,7 +23,7 @@ pub enum TrustError {
     TrustLevelToLow,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Fail, Debug, PartialEq, Eq)]
 pub enum GroupsTrustError {
     #[fail(display = "invalid_groups_trust_level")]
     InvalidGroupsTrustLevel,
@@ -31,7 +31,7 @@ pub enum GroupsTrustError {
     GroupsTrustLevelToLow,
 }
 
-#[derive(Clone, Fail, Debug, PartialEq)]
+#[derive(Clone, Fail, Debug, PartialEq, Eq)]
 pub enum AALevelError {
     #[fail(display = "higher_aal_required")]
     AALevelToLow,
@@ -70,7 +70,7 @@ impl TryFrom<String> for Trust {
     }
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "lowercase")]
 pub enum GroupsTrust {
     None,
@@ -98,7 +98,7 @@ impl TryFrom<String> for GroupsTrust {
 }
 
 /// Authenticator Assurance Level
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum AALevel {
     Unknown,
